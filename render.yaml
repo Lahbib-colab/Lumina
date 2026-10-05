@@ -1,0 +1,9 @@
+# Déploiement Render (non testé ici) : « New > Blueprint » puis choisir le dépôt contenant ce projet.
+services:
+  - type: web
+    name: lumina
+    runtime: docker
+    healthCheckPath: /api/health
+    envVars:
+      - key: LUMINA_TOKEN
+        generateValue: true

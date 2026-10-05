@@ -1,0 +1,13 @@
+{
+  "name": "lumina-offline",
+  "version": "1.1.0",
+  "description": "LUMINA : plateforme de streaming, extraction de flux et conversion HLS (.m3u8) vers MP4 pour le hors-ligne",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "demo": "node scripts/demo.js"
+  },
+  "engines": { "node": ">=18.17" },
+  "license": "MIT",
+  "private": true
+}

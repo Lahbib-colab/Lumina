@@ -1,0 +1,28 @@
+# Serveur en ligne avec https automatique (certificat gratuit géré par Caddy).
+# Prérequis : un serveur (VPS) avec Docker, et un nom de domaine dirigé vers l'IP de ce serveur.
+services:
+  lumina:
+    build: .
+    restart: unless-stopped
+    environment:
+      LUMINA_TOKEN: ${LUMINA_TOKEN:?Définissez LUMINA_TOKEN dans le fichier .env}
+    volumes:
+      - lumina-data:/data
+  caddy:
+    image: caddy:2
+    restart: unless-stopped
+    depends_on:
+      - lumina
+    ports:
+      - "80:80"
+      - "443:443"
+    environment:
+      DOMAIN: ${DOMAIN:?Définissez DOMAIN dans le fichier .env}
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy-data:/data
+      - caddy-config:/config
+volumes:
+  lumina-data:
+  caddy-data:
+  caddy-config:

@@ -1,0 +1,13 @@
+# Démarrage simple (accès en http, port 8787). Pour un accès en https depuis n'importe où, voir docker-compose.https.yml
+services:
+  lumina:
+    build: .
+    restart: unless-stopped
+    ports:
+      - "8787:8787"
+    environment:
+      LUMINA_TOKEN: ${LUMINA_TOKEN:?Définissez LUMINA_TOKEN dans le fichier .env}
+    volumes:
+      - lumina-data:/data
+volumes:
+  lumina-data:

@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#10141c">
+  <title>Lumina Hors-ligne</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%2310141c'/%3E%3Cpath d='M6 22 L26 12' stroke='%236ff0d8' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="/convert/style.css">
+</head>
+<body>
+  <header class="top">
+    <div>
+      <h1 class="mark">Lumina</h1>
+      <p class="sub">Télécharger pour regarder sans connexion</p>
+    </div>
+    <span id="conn" class="conn" role="status" data-state="off">Connexion…</span>
+  </header>
+
+  <main>
+    <form id="add" class="add" autocomplete="off">
+      <label for="url">Lien du flux (.m3u8 ou .mp4)</label>
+      <input id="url" type="url" required inputmode="url" spellcheck="false" placeholder="https://exemple.com/film/master.m3u8">
+
+      <div class="pair">
+        <div>
+          <label for="title">Titre</label>
+          <input id="title" type="text" maxlength="200" placeholder="Nom du fichier">
+        </div>
+        <div>
+          <label for="quality">Qualité</label>
+          <select id="quality">
+            <option value="best">Meilleure</option>
+            <option value="1080">1080p maximum</option>
+            <option value="720">720p maximum</option>
+            <option value="480">480p maximum</option>
+            <option value="360">360p maximum</option>
+          </select>
+        </div>
+      </div>
+
+      <details>
+        <summary>Options avancées</summary>
+        <label for="referer">Referer (si la source l'exige)</label>
+        <input id="referer" type="url" spellcheck="false" placeholder="https://exemple.com/">
+      </details>
+
+      <button type="submit" class="primary" id="submit">Télécharger</button>
+      <p id="formMsg" class="msg" role="alert"></p>
+    </form>
+
+    <div class="tabs" role="tablist" aria-label="Sections">
+      <button role="tab" id="tab-jobs" aria-selected="true" aria-controls="panel-jobs">Téléchargements <span class="count" id="count-jobs">0</span></button>
+      <button role="tab" id="tab-lib" aria-selected="false" aria-controls="panel-lib">Hors-ligne <span class="count" id="count-lib">0</span></button>
+    </div>
+
+    <section id="panel-jobs" role="tabpanel" aria-labelledby="tab-jobs">
+      <div id="jobs" class="stack"></div>
+      <p id="jobsEmpty" class="empty">Aucun téléchargement. Collez un lien ci-dessus pour commencer.</p>
+    </section>
+
+    <section id="panel-lib" role="tabpanel" aria-labelledby="tab-lib" hidden>
+      <div id="storage" class="storage" hidden>
+        <div class="gauge"><i id="gaugeFill"></i></div>
+        <p id="storageText"></p>
+      </div>
+      <div id="library" class="grid"></div>
+      <p id="libEmpty" class="empty">Rien à regarder hors-ligne pour l'instant. Les vidéos converties apparaissent ici.</p>
+    </section>
+  </main>
+
+  <dialog id="player" aria-label="Lecteur vidéo">
+    <div class="player-bar">
+      <strong id="playerTitle"></strong>
+      <button type="button" id="playerClose" class="ghost">Fermer</button>
+    </div>
+    <video id="video" controls playsinline preload="metadata"></video>
+  </dialog>
+
+  <dialog id="auth" aria-label="Jeton d'accès">
+    <form method="dialog" id="authForm" class="auth">
+      <p>Ce serveur est protégé. Saisissez le jeton d'accès (LUMINA_TOKEN).</p>
+      <input id="authToken" type="password" autocomplete="off" aria-label="Jeton d'accès">
+      <button class="primary" type="submit">Valider</button>
+    </form>
+  </dialog>
+
+  <script src="/convert/app.js"></script>
+</body>
+</html>
